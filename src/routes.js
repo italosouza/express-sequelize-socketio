@@ -26,16 +26,16 @@ const controllers = require('./app/controllers')
  */
 
 // usuario
-// routes.post(
-//   '/user',
-//   upload.single('avatar'),
-//   validate(validators.User),
-//   handler(controllers.UserController.store)
-// )
+routes.post(
+  '/api/user',
+  upload.single('avatar'),
+  validate(validators.User),
+  handler(controllers.UserController.store)
+)
 
 routes.post('/session', validate(validators.Session), handler(controllers.SessionController.store))
 
-// routes.post('/user', upload.single('avatar'), controllers.UserController.store)
+// routes.post('/api/user', upload.single('avatar'), controllers.UserController.store)
 routes.get('/files/:file', controllers.FileController.show)
 
 // rotas a sequir requerem Token de autenticação
@@ -54,9 +54,16 @@ routes.get('/files/:file', controllers.FileController.show)
 // user -
 routes.get('/api/user', controllers.UserController.index)
 routes.get('/api/user/:id', controllers.UserController.show)
-routes.post('/api/user', controllers.UserController.store)
+// routes.post('/api/user', controllers.UserController.store)
 routes.put('/api/user/:id', controllers.UserController.update)
 routes.delete('/api/user/:id', controllers.UserController.destroy)
+
+// user -
+routes.get('/api/perfil', controllers.PerfilController.index)
+routes.get('/api/perfil/:id', controllers.PerfilController.show)
+routes.post('/api/perfil', controllers.PerfilController.store)
+routes.put('/api/perfil/:id', controllers.PerfilController.update)
+routes.delete('/api/perfil/:id', controllers.PerfilController.destroy)
 
 // queue
 // routes.get('/queue', handler(controllers.QueueController.index))

@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
       provider: DataTypes.BOOLEAN
     },
     {
+      freezeTableName: true,
+      tableName: 'users'
+    },
+    {
       hooks: {
         beforeSave: async user => {
           if (user.password) {
@@ -21,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   )
+
+  User.associate = models => {
+    // User.belongsTo(models.Perfil, { foreignKey: 'perfil_id' })
+  }
 
   User.prototype.checkPassword = function(password) {
     return bcrypt.compare(password, this.password_hash)

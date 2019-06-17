@@ -8,4 +8,6 @@ const ioServer = require('./ioServer')(http, appServer)
 appServer.configIoMiddleware(ioServer)
 appServer.routes()
 
-http.listen(process.env.PORT || 8000)
+http.listen(process.env.PORT || 8080, function() {
+  console.log(`Servidor rodando em http://localhost:${process.env.PORT || 8080}`)
+})

@@ -1,4 +1,4 @@
-const User = require('../models')
+const { User } = require('../models')
 
 class UserController {
   async index(req, res) {
@@ -18,15 +18,18 @@ class UserController {
   }
 
   async show(req, res) {
-    const model = await User.findById(req.params.id)
+    const model = await User.findByPk(req.params.id)
 
     return res.json(model)
   }
 
   async store(req, res) {
-    const { email } = req.body
+    if (!req.file) {
+      return res.status(400).json({ error: 'arquivo avatar não informado' })
+    }
 
-    if (await User.findOne({ email })) {
+    const { email } = req.body
+    if (await User.findOne({ where: { email } })) {
       return res.status(400).json({ error: 'Usuário já cadastrado' })
     }
 

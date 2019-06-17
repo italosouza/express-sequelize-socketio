@@ -9,6 +9,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      perfil_id: {
+        type: Sequelize.INTEGER,
+        references: { model: 'perfil', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+        allowNull: false
+      },
       name: {
         allowNull: false,
         type: Sequelize.STRING
@@ -31,14 +38,8 @@ module.exports = {
         defaultValue: false,
         type: Sequelize.BOOLEAN
       },
-      created_at: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updated_at: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
+      created_at: Sequelize.DATE,
+      updated_at: Sequelize.DATE
     })
   },
 

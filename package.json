@@ -4,7 +4,7 @@
   "description": "Backend rest api with expressjs mysql2 sequelize and socket.io",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon src/index.js localhost 3000 -e js"
+    "start": "nodemon src/index.js -e js"
   },
   "devDependencies": {
     "eslint": "^5.15.0",
