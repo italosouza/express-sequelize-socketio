@@ -39,7 +39,7 @@ routes.post('/session', validate(validators.Session), handler(controllers.Sessio
 routes.get('/files/:file', controllers.FileController.show)
 
 // rotas a sequir requerem Token de autenticação
-routes.use(authMiddleware)
+// routes.use(authMiddleware)
 
 // vm
 // routes.get('/vm', handler(controllers.VmController.index))
@@ -52,7 +52,11 @@ routes.use(authMiddleware)
 // routes.post('/vm/leave/:id', handler(controllers.VmController.leave))
 
 // user -
-// routes.get('/user', controllers.UserController.index)
+routes.get('/api/user', controllers.UserController.index)
+routes.get('/api/user/:id', controllers.UserController.show)
+routes.post('/api/user', controllers.UserController.store)
+routes.put('/api/user/:id', controllers.UserController.update)
+routes.delete('/api/user/:id', controllers.UserController.destroy)
 
 // queue
 // routes.get('/queue', handler(controllers.QueueController.index))

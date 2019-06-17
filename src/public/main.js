@@ -235,6 +235,12 @@ $(function() {
     addChatMessage(tweet)
   })
 
+  socket.on('log', data => {
+    console.log(data)
+    const tweet = { username: 'SysOp', message: `${data}` }
+    addChatMessage(tweet)
+  })
+
   socket.on('queue join', data => {
     console.log(data)
     const tweet = { username: 'SysOp', message: `${data.user.name} entrou na fila de espera.` }
