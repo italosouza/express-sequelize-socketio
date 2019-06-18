@@ -10,9 +10,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   )
 
-  Perfil.associete = models => {
-    Perfil.hasOne(models.User, { foreignKey: 'perfil_id' })
-  }
+  // Perfil.associate = models => {
+  //   Perfil.hasOne(models.User)
+  // }
 
   return Perfil
 }

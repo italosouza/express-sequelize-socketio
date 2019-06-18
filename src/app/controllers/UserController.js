@@ -36,7 +36,9 @@ class UserController {
     const { filename: avatar } = req.file
     req.body.avatar = avatar
 
-    const user = await User.create(req.body)
+    const { perfil_id: pefilID } = req.body
+
+    const user = await User.create({ ...req.body, perfil_id: pefilID })
     req.io.emit('user store', user)
 
     return res.json(user)
