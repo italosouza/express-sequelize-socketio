@@ -5,7 +5,7 @@
 // const PurchaseMail = require('../jobs/PurchaseMail')
 // const Queue = require('../services/Queue')
 
-class PurchaseController {
+class SchedulerController {
   async store(req, res) {
     // const { ad, content } = req.body
 
@@ -29,4 +29,4 @@ class PurchaseController {
   }
 }
 
-module.exports = new PurchaseController()
+module.exports = new SchedulerController()

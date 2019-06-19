@@ -33,7 +33,11 @@ routes.post(
   handler(controllers.UserController.store)
 )
 
-routes.post('/session', validate(validators.Session), handler(controllers.SessionController.store))
+routes.post(
+  '/api/session',
+  validate(validators.Session),
+  handler(controllers.SessionController.store)
+)
 
 // routes.post('/api/user', upload.single('avatar'), controllers.UserController.store)
 routes.get('/files/:file', controllers.FileController.show)

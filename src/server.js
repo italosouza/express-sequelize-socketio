@@ -24,7 +24,7 @@ class App {
     this.database()
     this.middlewares()
     // this.routes() //routes must be defined after socket.io
-    // this.exception()
+    this.exception()
   }
 
   database() {}
@@ -34,7 +34,7 @@ class App {
     this.express.use(bodyParser.urlencoded({ extended: true }))
     this.express.use(bodyParser.json())
     this.express.use(methodOverride())
-    // this.express.use(Sentry.Handlers.requestHandler())
+    this.express.use(Sentry.Handlers.requestHandler())
     this.express.use(express.static(path.resolve(__dirname, 'public')))
   }
 

@@ -1,6 +1,9 @@
 const { Perfil } = require('../models')
 
 class PerfilController {
+  /**
+   * GET
+   */
   async index(req, res) {
     const filters = {}
 
@@ -17,12 +20,18 @@ class PerfilController {
     return res.json(list)
   }
 
+  /**
+   * GET/:ID
+   */
   async show(req, res) {
     const model = await Perfil.findByPk(req.params.id)
 
     return res.json(model)
   }
 
+  /**
+   * POST
+   */
   async store(req, res) {
     const perfil = await Perfil.create(req.body)
     req.io.emit('perfil store', perfil)
@@ -30,23 +39,30 @@ class PerfilController {
     return res.json(perfil)
   }
 
+  /**
+   * PUT/:ID
+   */
   async update(req, res) {
-    const model = await Perfil.update(req.body, {
-      where: {
-        id: req.params.id
-      }
-    })
+    const { body } = req
+    const { id } = req.params
 
-    req.io.emit('perfil update', model)
+    await Perfil.update(body, { where: { id: id } })
 
-    return res.json(model)
+    const updatedModel = await Perfil.findByPk(id)
+    req.io.emit('perfil update', updatedModel)
+
+    return res.json(updatedModel)
   }
 
+  /**
+   * DELETE/:ID
+   */
   async destroy(req, res) {
-    await Perfil.destroy({ id: req.params.id })
-    req.io.emit('perfil destroy', req.params.id)
+    const { id } = req.params
+    await Perfil.destroy({ where: { id: id } })
+    req.io.emit('perfil delete', id)
 
-    return res.send()
+    return res.json({ id })
   }
 }
 

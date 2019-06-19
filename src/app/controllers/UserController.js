@@ -1,6 +1,9 @@
 const { User } = require('../models')
 
 class UserController {
+  /**
+   * GET
+   */
   async index(req, res) {
     const filters = {}
 
@@ -13,16 +16,21 @@ class UserController {
     }
 
     const list = await User.findAll(filters)
-
     return res.json(list)
   }
 
+  /**
+   * GET/:ID
+   */
   async show(req, res) {
-    const model = await User.findByPk(req.params.id)
+    const model = await User.findByPk(req.params.id, { include: ['Perfil'] })
 
     return res.json(model)
   }
 
+  /**
+   * POST
+   */
   async store(req, res) {
     if (!req.file) {
       return res.status(400).json({ error: 'arquivo avatar não informado' })
@@ -44,23 +52,30 @@ class UserController {
     return res.json(user)
   }
 
+  /**
+   * PUT/:ID
+   */
   async update(req, res) {
-    const model = await User.update(req.body, {
-      where: {
-        id: req.params.id
-      }
-    })
+    const { body } = req
+    const { id } = req.params
 
-    req.io.emit('user update', model)
+    await User.update(body, { where: { id: id } })
 
-    return res.json(model)
+    const updatedModel = await User.findByPk(id)
+    req.io.emit('user update', updatedModel)
+
+    return res.json(updatedModel)
   }
 
+  /**
+   * DELETE/:ID
+   */
   async destroy(req, res) {
-    await User.destroy({ id: req.params.id })
-    req.io.emit('user destroy', req.params.id)
+    const { id } = req.params
+    await User.destroy({ where: { id: id } })
+    req.io.emit('user delete', id)
 
-    return res.send()
+    return res.json({ id })
   }
 }
 

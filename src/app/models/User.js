@@ -1,4 +1,6 @@
 const bcrypt = require('bcryptjs')
+const authConfig = require('../../config/auth')
+const jwt = require('jsonwebtoken')
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
@@ -31,35 +33,18 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   User.prototype.checkPassword = function(password) {
-    return bcrypt.compare(password, this.password_hash)
+    return bcrypt.compare(password, this.dataValues.password_hash)
   }
 
   User.prototype.compareHash = function(password) {
-    return bcrypt.compare(password, this.password)
+    return bcrypt.compare(password, this.dataValues.password_hash)
+  }
+
+  User.prototype.generateToken = function(id) {
+    return jwt.sign({ id }, authConfig.secret, {
+      expiresIn: authConfig.ttl
+    })
   }
 
   return User
 }
-
-// UserSchema.pre('save', async function(next) {
-//   if (!this.isModified('password')) {
-//     return next()
-//   }
-//   this.password = await bcrypt.hash(this.password, 8)
-// })
-
-// UserSchema.methods = {
-//   compareHash(password) {
-//     return bcrypt.compare(password, this.password)
-//   }
-// }
-
-// UserSchema.statics = {
-//   generateToken({ id }) {
-//     return jwt.sign({ id }, authConfig.secret, {
-//       expiresIn: authConfig.ttl
-//     })
-//   }
-// }
-
-// module.exports = mongoose.model('User', UserSchema)

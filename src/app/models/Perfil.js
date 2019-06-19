@@ -10,9 +10,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   )
 
-  // Perfil.associate = models => {
-  //   Perfil.hasOne(models.User)
-  // }
+  Perfil.associate = models => {
+    Perfil.hasOne(models.User)
+  }
 
   return Perfil
 }
